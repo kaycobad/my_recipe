@@ -3,7 +3,9 @@ import 'package:http/http.dart' as http;
 import 'package:myrecipe/models/recipe_model.dart';
 import 'dart:convert';
 import 'package:myrecipe/widgets/food_cards.dart';
+import 'favorites_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:myrecipe/services/firestore_services.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,6 +18,7 @@ bool _isLoading = false;
 class _HomePageState extends State<HomePage> {
   final _textController = TextEditingController();
   String _queryText = '';
+  final firestoreService = FirestoreService();
 
   addStringToSF(String txt) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -56,8 +59,20 @@ class _HomePageState extends State<HomePage> {
           FocusScope.of(context).unfocus();
         },
         child: _isLoading == false
-            ? Center(
-                child: CircularProgressIndicator(),
+            ? Container(
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                  image: AssetImage('images/kitchen.jpg'),
+                  fit: BoxFit.cover,
+                )),
+                child: Container(
+                  color: Colors.white.withOpacity(.2),
+                  child: Center(
+                    child: CircularProgressIndicator(
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(Colors.white)),
+                  ),
+                ),
               )
             : CustomScrollView(
                 slivers: <Widget>[
@@ -198,6 +213,19 @@ class _HomePageState extends State<HomePage> {
                                 "${_recipes[index].servings.toString()} servings",
                             readyInMinutes:
                                 "Ready in ${_recipes[index].readyInMinutes.toString()} minutes",
+                            icon: Icon(Icons.add_photo_alternate),
+                            saveFunc: () {
+                              var newRecipe = RecipeModel(
+                                image:
+                                    'https://spoonacular.com/recipeImages/${_recipes[index].image}',
+                                id: _recipes[index].id,
+                                title: _recipes[index].title,
+                                sourceUrl: _recipes[index].sourceUrl,
+                                servings: _recipes[index].servings,
+                                readyInMinutes: _recipes[index].readyInMinutes,
+                              );
+                              firestoreService.saveProduct(newRecipe);
+                            },
                           );
                         },
                         childCount: _recipes.length,
@@ -207,6 +235,22 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
       ),
+      floatingActionButton: _isLoading == false
+          ? Container(
+              color: Colors.transparent, // This is optional
+            )
+          : FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FavoritesPage(),
+                  ),
+                );
+              },
+              child: Icon(Icons.collections),
+              backgroundColor: Colors.grey,
+            ),
     );
   }
 }

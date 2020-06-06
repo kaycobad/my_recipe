@@ -24,4 +24,23 @@ class RecipeModel {
       servings: parsedJson["servings"],
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'image': image,
+      'title': title,
+      'servings': servings,
+      'readyInMinutes': readyInMinutes,
+      'sourceUrl': sourceUrl,
+    };
+  }
+
+  RecipeModel.fromFirestore(Map<String, dynamic> firestore)
+      : id = firestore['id'],
+        image = firestore['image'],
+        title = firestore['price'],
+        servings = firestore['servings'],
+        readyInMinutes = firestore['readyInMinutes'],
+        sourceUrl = firestore['sourceUrl'];
 }

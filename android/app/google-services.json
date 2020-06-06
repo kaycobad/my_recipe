@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "229037368453",
+    "firebase_url": "https://myrecipe-408fa.firebaseio.com",
+    "project_id": "myrecipe-408fa",
+    "storage_bucket": "myrecipe-408fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:229037368453:android:f8519d13b0464322aa35ec",
+        "android_client_info": {
+          "package_name": "com.kaycobadjony.myrecipe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "229037368453-a3krccbbm2e8gl1q5mn7d2qkv8e9dc9p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBd7hNNLctxG6asNieTwUaWKIWBpDjvKKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "229037368453-a3krccbbm2e8gl1q5mn7d2qkv8e9dc9p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
